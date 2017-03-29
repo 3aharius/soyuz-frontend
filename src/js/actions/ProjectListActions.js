@@ -9,7 +9,6 @@ export function loadProjects() {
 	axios.get('/api/projects')
 	.then(responce => {
 		let {data: items} = responce;
-	    console.log(items);
 	    AppDispatcher.dispatch({
 	        type: keys.PROJECT_LISTS_LOAD_SUCCESS,
 	        items

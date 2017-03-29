@@ -10,11 +10,11 @@ export default class ProjectsList extends React.Component {
 	constructor() {
 		super();
 		this.state = getStateFromStore();
-		this._onChangeListener = this._onChange.bind(this);
+		this._onChange = this._onChange.bind(this);
 	}
 
 	componentWillMount() {
-		ProjectStore.addChangeListener(this._onChangeListener);
+		ProjectStore.addChangeListener(this._onChange);
 		ProjectListActions.loadProjects();
 	};
 
@@ -43,7 +43,7 @@ export default class ProjectsList extends React.Component {
 	};
 
     componentWillUnmount() {
-        ProjectStore.removeChangeListener(this._onChangeListener);
+        ProjectStore.removeChangeListener(this._onChange);
     };
 
 	_onChange() {

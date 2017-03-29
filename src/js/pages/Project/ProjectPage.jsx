@@ -11,11 +11,11 @@ export default class ProjectPage extends React.Component {
 	constructor() {
 		super();
 		this.state = getStateFromStore();
-		this._onChangeListener = this._onChange.bind(this);
+		this._onChange = this._onChange.bind(this);
 	};
 
 	componentWillMount() {
-		ProjectStore.addChangeListener(this._onChangeListener);
+		ProjectStore.addChangeListener(this._onChange);
 		const {project} = this.props.params;
 		loadProjectBySeoName(project);
 	};
@@ -49,7 +49,7 @@ export default class ProjectPage extends React.Component {
 	};
 
 	componentWillUnmount() {
-        ProjectStore.removeChangeListener(this._onChangeListener);
+        ProjectStore.removeChangeListener(this._onChange);
     };
 
 	_onChange() {
