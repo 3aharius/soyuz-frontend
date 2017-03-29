@@ -21,6 +21,11 @@ export default class ProjectStore extends CommonEventEmitter {
 	            this.emitChange();
 	            break;
 	        }
+		    case keys.PROJECT_LISTS_LOAD_FAIL: {
+	        	_projects = action.items;
+	            this.emitChange();
+	            break;
+	        }
 		    case keys.PROJECT_LOAD_SUCCESS: {
 	        	_project = action.item;
 	            this.emitChange();
