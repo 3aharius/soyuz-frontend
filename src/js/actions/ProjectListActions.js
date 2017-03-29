@@ -1,14 +1,27 @@
 import AppDispatcher from 'dispatcher';
 import keys from 'keys';
 import {toSeoName} from 'components/Project';
+import axios from 'axios';
 
 const _stubProjects = require('data/Projects.json');
 
 export function loadProjects() {
-	AppDispatcher.dispatch({
-        type: keys.PROJECT_LISTS_LOAD_SUCCESS,
-        items: _stubProjects
-    });        
+	axios.get('/api/projects')
+	.then(responce => {
+		let {data: items} = responce;
+	    console.log(items);
+	    AppDispatcher.dispatch({
+	        type: keys.PROJECT_LISTS_LOAD_SUCCESS,
+	        items
+	    });
+	})
+	.catch(error => {
+	    console.log(error);
+	    AppDispatcher.dispatch({
+	        type: keys.PROJECT_LISTS_LOAD_FAIL,
+	        items: _stubProjects
+	    });
+	});      
 }
 
 export function loadProjectBySeoName(seoName) {

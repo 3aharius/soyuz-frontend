@@ -2,7 +2,7 @@ import React from 'react';
 
 import ProjectsListItem from './ProjectsListItem';
 import {ProjectStore} from 'stores';
-import {loadProjects} from 'actions/ProjectListActions';
+import * as ProjectListActions from 'actions/ProjectListActions';
 import Project from 'components/Project';
 
 export default class ProjectsList extends React.Component {
@@ -15,7 +15,7 @@ export default class ProjectsList extends React.Component {
 
 	componentWillMount() {
 		ProjectStore.addChangeListener(this._onChangeListener);
-		loadProjects();
+		ProjectListActions.loadProjects();
 	};
 
 	componentDidMount() {
