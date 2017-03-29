@@ -1,7 +1,8 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+let path = require('path');
+let webpack = require('webpack');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const srcDir = 'src';
 const outDir = 'static';
@@ -25,7 +26,9 @@ module.exports = {
     alias: {
       styles: 'assets/css/',
       images: 'assets/images/',
-      layout: 'js/components/Layout/'
+      layout: 'js/components/Layout/',
+      data: 'assets/data/',
+      components: 'js/components/'
     },
     modules: ['src', 'node_modules'],
     extensions: ['.js', '.jsx', '.html', '.css']
@@ -81,10 +84,18 @@ module.exports = {
       "process.env": {
         NODE_ENV: JSON.stringify('development')
       },
-      SRC_DIR: JSON.stringify(path.join(__dirname, srcDir))
+      DYN_IMAGES_PUBLIC_PATH: JSON.stringify('/assets/images/dynamic/')
     }),
     new HtmlWebpackPlugin({
       template: 'assets/index.html'
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: 'assets/images/dynamic',
+        to: 'assets/images/dynamic/[name].[ext]'
+      }
+    ], {
+      copyUnmodified: true
     }),
   ],
 };
