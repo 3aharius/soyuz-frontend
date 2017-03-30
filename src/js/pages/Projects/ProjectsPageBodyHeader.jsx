@@ -1,15 +1,19 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
+import {filterProjects} from 'actions/projectActions';
+
+@connect((store) => {
+  return {
+    filter: store.projects.filter
+  };
+})
 
 export default class ProjectsPageBodyHeader extends React.Component {
 
-	constructor() {
-		super();
-
-	};
-
 	handleInput(event) {
-		const value = event.target.value;
-		this.props.onFilter(value);
+		const value = event.target.value;		
+		this.props.dispatch(filterProjects(value));
 	};
 	      
 	render() {
@@ -17,7 +21,7 @@ export default class ProjectsPageBodyHeader extends React.Component {
 			<div>
 				<form>
 					<h1>Projects</h1>
-					<input type="text" placeholder="filter" onChange={this.handleInput.bind(this)} />
+					<input type="text" placeholder="filter" value={this.props.filter} onChange={this.handleInput.bind(this)} />
 				</form>
 			</div>
 		);                   

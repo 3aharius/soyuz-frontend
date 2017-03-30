@@ -32,7 +32,10 @@ module.exports = {
       images: 'assets/images/',
       layout: 'js/components/Layout/',
       data: 'assets/data/',
-      components: 'js/components/'
+      components: 'js/components/',
+      config: 'js/config/',
+      reducers: 'js/reducers/',
+      actions: 'js/actions/'
     },
     modules: ['src', 'node_modules'],
     extensions: ['.js', '.jsx', '.html', '.css']
