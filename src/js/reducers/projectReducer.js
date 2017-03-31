@@ -10,26 +10,15 @@ export default function reducer(state = {
     project: {}
   }, action) {
     switch (action.type) {
-      case ActionType.FETCH_PROJECTS: {
+      case ActionType.FETCH_PROJECTS_PENDING: {
         return {...state, fetching: true}
-      }
-      case ActionType.FETCH_PROJECTS_REJECTED: {
-        return {...state, fetching: false, error: action.err}
       }
       case ActionType.FETCH_PROJECTS_FULFILLED: {
         return {
           ...state,
           fetching: false,
           fetched: true,
-          projects: action.projects || [],
-        }
-      }
-      case ActionType.FETCH_DEFAULT_PROJECTS: {
-        return {
-          ...state,
-          fetching: false,
-          fetched: true,
-          projects: action.projects || [],
+          projects: action.payload.data || [],
         }
       }
       case ActionType.FILTER_PROJECTS: {
@@ -41,7 +30,7 @@ export default function reducer(state = {
       case ActionType.FETCH_PROJECT_FULFILLED: {
         return {
           ...state,
-          project: action.project,
+          project: action.payload.data
         }
       }
     }

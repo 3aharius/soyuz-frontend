@@ -2,35 +2,24 @@ import ActionType from 'actions/actionType';
 import {toSeoName} from 'components/Project';
 import axios from 'axios';
 
-let _projectsStub = [];
-
 export function fetchProjects() {
 	return (dispatch) => {
-	    axios.get('/api/projects')
-	    .then(responce => {
-			let {data: projects} = responce;
-			_projectsStub = projects;
-		    dispatch({
-		        type: ActionType.FETCH_PROJECTS_FULFILLED,
-		        projects
-		    });
-		})
-	    .catch(error => {
-		    console.error(error);
-		    dispatch(fetchDefaultProjects());
-		});
+		dispatch({
+	        type: ActionType.FETCH_PROJECTS,
+	        payload: axios.get('/api/projects')
+	    });
   	}     
 }
 
 export function fetchDefaultProjects() {
-	return (dispatch) => {
-		let projects = require('data/Projects.json');
-		_projectsStub = projects;
-	    dispatch({
-	        type: ActionType.FETCH_PROJECTS_FULFILLED,
-	        projects
-	    });
-  	}
+    let payload = new Promise((resolve, reject) => setTimeout(() => {
+        resolve({data: require('data/Projects.json')});
+      }, 1000)
+    );
+    return {
+      type: ActionType.FETCH_PROJECTS,
+      payload
+    };  
 }
 
 export function filterProjects(filter) {
@@ -43,11 +32,15 @@ export function filterProjects(filter) {
 }
 
 export function fetchProjectBySeoName(seoName) {
+	let projects = require('data/Projects.json');
 	return (dispatch) => {
-		let project = _projectsStub.find(el => seoName === toSeoName(el.title));
+	    let payload = new Promise((resolve, reject) => setTimeout(() => {
+		    resolve({data: projects.find(el => seoName === toSeoName(el.title))});
+		  }, 1000)
+		);
 	    dispatch({
-	        type: ActionType.FETCH_PROJECT_FULFILLED,
-	        project
+	        type: ActionType.FETCH_PROJECT,
+	        payload
 	    });
   	}        
 }

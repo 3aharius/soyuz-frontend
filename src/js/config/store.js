@@ -7,13 +7,17 @@ import promise from "redux-promise-middleware";
 import reducer from 'reducers';
 import DevTools from 'config/devtools';
 
+import ActionType from 'actions/actionType';
+import reDispatchMiddleware from 'config/reDispatchMiddleware';
+import fetchDefaultDataProducer from 'producers/fetchDefaultDataProducer';
+
 const middlewares = process.env.NODE_ENV === 'development' ?
   [
-    applyMiddleware(promise(), thunk, createLogger()),
-    DevTools.instrument()
+    applyMiddleware(promise(), thunk, createLogger(), reDispatchMiddleware(fetchDefaultDataProducer)),
+    DevTools.instrument(),
   ] :
   [
-    applyMiddleware(promise(), thunk, createLogger()),
+    applyMiddleware(promise(), thunk, createLogger(), reDispatchMiddleware(fetchDefaultDataProducer)),
   ];
 
 export default (initialState = {}) => {

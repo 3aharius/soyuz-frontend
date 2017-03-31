@@ -35,7 +35,8 @@ module.exports = {
       components: 'js/components/',
       config: 'js/config/',
       reducers: 'js/reducers/',
-      actions: 'js/actions/'
+      actions: 'js/actions/',
+      producers: 'js/producers/'
     },
     modules: ['src', 'node_modules'],
     extensions: ['.js', '.jsx', '.html', '.css']
